@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "workshop",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--", "--app", "app"],
+      "port": 5173
+    },
+    {
+      "name": "playground",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 5173
+    }
+  ]
+}

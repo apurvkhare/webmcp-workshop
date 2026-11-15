@@ -1,0 +1,551 @@
+/* The workshop drawer. Dark on purpose, so it never looks like part of the shop. Everything is prefixed ws-. */
+.ws-drawer,
+.ws-toggle {
+  --ws-bg: #14161c;
+  --ws-panel: #1c1f28;
+  --ws-line: #2c3140;
+  --ws-text: #e7e9ee;
+  --ws-muted: #9aa1b2;
+  --ws-accent: #8b7cf6;
+  --ws-good: #4ade80;
+  --ws-warn: #fbbf24;
+  --ws-bad: #f87171;
+  font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--ws-text);
+  box-sizing: border-box;
+}
+.ws-drawer *,
+.ws-drawer *::before,
+.ws-drawer *::after {
+  box-sizing: border-box;
+}
+
+.ws-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1001;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--ws-line);
+  border-radius: 999px;
+  background: var(--ws-bg);
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.25);
+  cursor: pointer;
+  font-weight: 600;
+}
+.ws-toggle span,
+.ws-status {
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgb(248 113 113 / 0.18);
+  color: var(--ws-bad);
+}
+.ws-toggle[data-supported='true'] span,
+.ws-status[data-supported='true'] {
+  background: rgb(74 222 128 / 0.16);
+  color: var(--ws-good);
+}
+
+.ws-drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 1000;
+  width: 440px;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: var(--ws-bg);
+  border-left: 1px solid var(--ws-line);
+  box-shadow: -8px 0 32px rgb(0 0 0 / 0.18);
+}
+.ws-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ws-line);
+}
+.ws-head strong {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+.ws-head .ws-status {
+  margin-right: auto;
+}
+
+.ws-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--ws-line);
+}
+.ws-tabs button {
+  flex: 1;
+  padding: 9px 4px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--ws-muted);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ws-tabs button[aria-selected='true'] {
+  color: var(--ws-text);
+  border-bottom-color: var(--ws-accent);
+}
+.ws-tabs i {
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--ws-line);
+  font-style: normal;
+  font-size: 11px;
+}
+
+.ws-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px;
+}
+.ws-body h3 {
+  margin: 18px 0 6px;
+  font-size: 15px;
+}
+.ws-body h3:first-child {
+  margin-top: 0;
+}
+.ws-body h4 {
+  margin: 10px 0 4px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ws-muted);
+}
+.ws-body ul,
+.ws-body ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ws-body p {
+  margin: 0 0 10px;
+}
+.ws-body pre {
+  margin: 0;
+  padding: 8px 10px;
+  max-height: 260px;
+  overflow: auto;
+  border: 1px solid var(--ws-line);
+  border-radius: 6px;
+  background: #0e1014;
+  font: 12px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.ws-body code {
+  font: 12.5px ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  padding: 1px 4px;
+  border-radius: 4px;
+  background: #0e1014;
+}
+.ws-body pre code {
+  padding: 0;
+  background: none;
+}
+.ws-body blockquote {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-left: 3px solid var(--ws-accent);
+  background: var(--ws-panel);
+  border-radius: 0 6px 6px 0;
+}
+.ws-muted {
+  color: var(--ws-muted);
+}
+.ws-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.ws-row > span:first-child {
+  margin-right: auto;
+}
+.ws-notice {
+  padding: 10px 12px;
+  border: 1px solid var(--ws-line);
+  border-left: 3px solid var(--ws-warn);
+  border-radius: 6px;
+  background: var(--ws-panel);
+}
+.ws-notice ol {
+  margin: 6px 0 0;
+  padding-left: 20px;
+  list-style: decimal;
+}
+
+.ws-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--ws-accent);
+  border-radius: 6px;
+  background: var(--ws-accent);
+  color: #0e1014;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ws-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.ws-btn-quiet {
+  padding: 3px 9px;
+  border-color: var(--ws-line);
+  background: none;
+  color: var(--ws-muted);
+  font-size: 12px;
+}
+.ws-btn-quiet[aria-pressed='true'] {
+  color: var(--ws-text);
+  border-color: var(--ws-accent);
+}
+.ws-check {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: var(--ws-muted);
+}
+
+.ws-badge {
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--ws-line);
+}
+.ws-badge[data-tone='read'] {
+  background: rgb(74 222 128 / 0.16);
+  color: var(--ws-good);
+}
+.ws-badge[data-tone='danger'] {
+  background: rgb(248 113 113 / 0.18);
+  color: var(--ws-bad);
+}
+.ws-badge[data-tone='warn'] {
+  background: rgb(251 191 36 / 0.16);
+  color: var(--ws-warn);
+}
+.ws-badge[data-tone='form'] {
+  background: rgb(139 124 246 / 0.2);
+  color: #b8adff;
+}
+
+/* Tools and activity */
+.ws-tool,
+.ws-call {
+  margin-bottom: 8px;
+  border: 1px solid var(--ws-line);
+  border-radius: 8px;
+  background: var(--ws-panel);
+}
+.ws-tool summary,
+.ws-call summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.ws-tool-name {
+  font-weight: 700;
+  font-size: 13px !important;
+  background: none !important;
+  padding: 0 !important;
+  color: #c9c2ff;
+}
+.ws-tool-desc {
+  flex-basis: 100%;
+  color: var(--ws-muted);
+  font-size: 13px;
+}
+.ws-tool-body,
+.ws-call details[open] > :not(summary) {
+  margin: 0 10px 10px;
+}
+.ws-tool-body {
+  padding-bottom: 2px;
+}
+.ws-tool textarea {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--ws-line);
+  border-radius: 6px;
+  background: #0e1014;
+  color: var(--ws-text);
+  font: 12px/1.5 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  resize: vertical;
+}
+.ws-output {
+  margin-top: 8px !important;
+  border-color: var(--ws-good) !important;
+}
+.ws-output[data-kind='failed'] {
+  border-color: var(--ws-bad) !important;
+  color: var(--ws-bad);
+}
+.ws-call time {
+  color: var(--ws-muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.ws-call[data-outcome='error'],
+.ws-call[data-outcome='threw'] {
+  border-left: 3px solid var(--ws-bad);
+}
+
+/* Agent view */
+.ws-size {
+  margin-bottom: 8px;
+  border: 1px solid var(--ws-line);
+  border-radius: 8px;
+  background: var(--ws-panel);
+}
+.ws-size summary {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.ws-size-label {
+  display: block;
+  font-size: 12px;
+  color: var(--ws-muted);
+}
+.ws-size b {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+.ws-size pre {
+  margin: 0 10px 10px;
+}
+.ws-compare {
+  width: 100%;
+  margin: 10px 0;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ws-compare th,
+.ws-compare td {
+  padding: 6px 8px;
+  border: 1px solid var(--ws-line);
+  text-align: left;
+  vertical-align: top;
+}
+.ws-compare thead th {
+  background: var(--ws-panel);
+}
+.ws-compare tbody th {
+  width: 78px;
+  color: var(--ws-muted);
+  font-weight: 600;
+}
+.ws-compare tr:first-child td {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.ws-replay-steps {
+  counter-reset: step;
+}
+.ws-replay-steps li {
+  counter-increment: step;
+  position: relative;
+  margin-bottom: 6px;
+  padding: 6px 10px 6px 34px;
+  border: 1px solid var(--ws-line);
+  border-radius: 6px;
+  background: var(--ws-panel);
+  word-break: break-word;
+}
+.ws-replay-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 10px;
+  color: var(--ws-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ws-replay-steps em,
+.ws-replay-steps small {
+  display: block;
+  color: var(--ws-muted);
+  font-size: 12px;
+}
+/* The element a "Shop by clicking" step is about to use. On the shop's side of the page. */
+.ws-replay-target {
+  outline: 3px solid #8b7cf6 !important;
+  outline-offset: 3px !important;
+  transition: outline-color 0.2s;
+}
+
+/* Guide */
+.ws-guide-head h2 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  line-height: 1.3;
+}
+.ws-guide-section {
+  margin: 0 !important;
+  font-size: 12px;
+  color: var(--ws-muted);
+}
+.ws-step-id {
+  color: var(--ws-accent);
+}
+.ws-kind {
+  margin-left: 8px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--ws-line);
+  font-size: 11px;
+  vertical-align: middle;
+}
+.ws-kind[data-kind='solution'] {
+  background: rgb(74 222 128 / 0.16);
+  color: var(--ws-good);
+}
+.ws-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.ws-steps button {
+  padding: 2px 8px;
+  border: 1px solid var(--ws-line);
+  border-radius: 6px;
+  background: none;
+  color: var(--ws-muted);
+  font: 12px ui-monospace, Menlo, Consolas, monospace;
+  cursor: pointer;
+}
+.ws-steps button[aria-current='step'] {
+  background: var(--ws-accent);
+  border-color: var(--ws-accent);
+  color: #0e1014;
+  font-weight: 700;
+}
+.ws-steps button[aria-pressed='true'] {
+  border-color: var(--ws-accent);
+  color: var(--ws-text);
+}
+.ws-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 4px 4px 0;
+  padding: 2px 4px 2px 8px;
+  border: 1px solid var(--ws-line);
+  border-radius: 6px;
+  background: #0e1014;
+}
+.ws-command code {
+  background: none;
+  padding: 0;
+}
+.ws-command button,
+.ws-markdown [data-copy] {
+  padding: 1px 7px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--ws-line);
+  color: var(--ws-muted);
+  font: 11px ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+}
+.ws-guide-head {
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--ws-line);
+}
+.ws-markdown h1 {
+  display: none;
+}
+.ws-markdown h2 {
+  margin: 20px 0 8px;
+  font-size: 15px;
+}
+.ws-markdown h3 {
+  margin: 16px 0 6px;
+  font-size: 14px;
+}
+.ws-markdown p[data-marker='🔨'] {
+  padding: 10px 12px;
+  border-left: 3px solid var(--ws-accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--ws-panel);
+}
+.ws-markdown ul,
+.ws-markdown ol {
+  margin: 0 0 10px;
+  padding-left: 20px;
+}
+.ws-markdown ul {
+  list-style: disc;
+}
+.ws-markdown ol {
+  list-style: decimal;
+}
+.ws-markdown li {
+  margin-bottom: 4px;
+}
+.ws-markdown a {
+  color: #b8adff;
+}
+.ws-markdown hr {
+  border: 0;
+  border-top: 1px solid var(--ws-line);
+  margin: 16px 0;
+}
+.ws-markdown .code-block {
+  position: relative;
+  margin-bottom: 10px;
+}
+.ws-markdown .code-block [data-copy] {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+}
+.ws-markdown .table-wrap {
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+/* A wide table scrolls sideways inside the drawer instead of being cut off. */
+.ws-markdown .table-wrap {
+  overflow-x: auto;
+  margin: 10px 0;
+}
+.ws-markdown table {
+  border-collapse: collapse;
+  font-size: 13px;
+  width: 100%;
+}
+.ws-markdown td code,
+.ws-markdown th code {
+  white-space: nowrap;
+}
+.ws-markdown th,
+.ws-markdown td {
+  padding: 5px 8px;
+  border: 1px solid var(--ws-line);
+  text-align: left;
+  vertical-align: top;
+}
+.ws-markdown th {
+  background: var(--ws-panel);
+}

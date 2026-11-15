@@ -1,0 +1,39 @@
+{
+  "name": "webmcp-workshop",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "status": "tsx scripts/status.ts",
+    "go": "tsx scripts/go.ts",
+    "diff": "tsx scripts/diff.ts",
+    "solution": "tsx scripts/solution.ts",
+    "test": "tsx scripts/test.ts",
+    "start": "tsx scripts/start.ts",
+    "dev": "tsx scripts/start.ts",
+    "doctor": "tsx scripts/doctor.ts",
+    "verify": "tsx scripts/verify.ts",
+    "verify:chrome": "tsx scripts/verify-chrome.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "cut": "tsx scripts/authoring/cut.ts",
+    "codelab": "tsx scripts/codelab.ts"
+  },
+  "dependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.43",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "jsdom": "27.4.0",
+    "puppeteer-core": "24.43.1",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vite": "8.3.4",
+    "vitest": "4.1.12"
+  }
+}

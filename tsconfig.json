@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node", "vite/client"],
+    "paths": {
+      "@shop": ["./shop/src/index.ts"],
+      "@shop/testing": ["./shop/src/testing/index.ts"],
+      "@app/*": ["./app/*"]
+    }
+  },
+  "include": ["shop/src", "app", "scripts", "vite.config.ts", "vitest.config.ts"],
+  "exclude": ["scripts/authoring/source"]
+}
