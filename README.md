@@ -107,7 +107,7 @@ For workshop authors: `npm run cut` regenerates every exercise folder and `app/`
 | `shop/` | The shop itself: the React UI, the API server, the seed data, the workshop drawer, and test helpers. Not WebMCP code, shared by every step |
 | `shop/src/webmcp.d.ts` | TypeScript types for `document.modelContext`, written for this workshop from the spec |
 | `scripts/` | The commands above. `scripts/authoring/` holds the source every step is cut from |
-| `slides/` · `demo/` | The concept slides with speaker notes, and the runbook for the opening demo |
+| `slides/` · `demo/` | The deck (in Google Slides, linked from `slides/README.md`) with its outline and speaker notes, and the runbook for the opening demo |
 | `PRODUCTION-CHECKLIST.md` · `GOING-FURTHER.md` | The handout, and what didn't fit in 90 minutes |
 
 ## What this was checked against
