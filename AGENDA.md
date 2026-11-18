@@ -102,7 +102,7 @@ Anyone behind at a section boundary runs `npm run solution`, then `npm run go ne
 
 ## What attendees need
 
-- Chrome 155 or later, with `chrome://flags/#enable-webmcp-testing` enabled, and `#devtools-webmcp-support` too if it is listed.
+- The latest Chrome (155 or later), with `chrome://flags/#enable-webmcp-testing` enabled, and `#devtools-webmcp-support` too if it is listed.
 - Node 20.19 or later, git, a code editor.
 - Optional: a coding agent. Optional: a free Gemini API key and the Model Context Tool Inspector extension.
 

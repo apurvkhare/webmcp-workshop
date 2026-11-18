@@ -22,7 +22,7 @@ The 75-minute run of show is in [AGENDA.md](AGENDA.md).
 
 ## Setup
 
-Needs Chrome 155 or later, Node 20.19 or later, and git. Full instructions, to do before the day: [SETUP.md](SETUP.md).
+Needs the latest Chrome (155 or later), Node 20.19 or later, and git. Full instructions, to do before the day: [SETUP.md](SETUP.md).
 
 ```bash
 npm install

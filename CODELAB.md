@@ -36,9 +36,11 @@
 
 Do this before the workshop, on a network you trust. It takes about 10 minutes. After it, the workshop runs offline.
 
+> **First, update Chrome to the latest version.** Open `chrome://settings/help`, let it download the update, and press **Relaunch**. WebMCP is an origin trial, and it changes from one Chrome release to the next. The workshop needs Chrome 155 or later and was checked in Chrome 157. Update even if you think you're current: Chrome often waits for a relaunch before it installs an update.
+
 ### You need
 
-- **Chrome 155 or later.** Check at `chrome://version`. Update at `chrome://settings/help`, then relaunch. Chrome Beta or Canary work too.
+- **The latest Chrome: 155 or later.** Update at `chrome://settings/help`, then relaunch. Check the number at `chrome://version`. Chrome Beta or Canary work too.
 - **Node 20.19 or later.** Check with `node --version`. Install the LTS from [nodejs.org](https://nodejs.org), or with `nvm install 22`.
 - **git**, to clone the repo.
 - **Port 5173 free.** The shop runs there.
@@ -136,7 +138,7 @@ Open the repo in it once before the day, so it picks up `AGENTS.md`. That file k
 
 ### Before you leave home
 
-- [ ] `chrome://version` says 155 or later
+- [ ] Chrome is updated: `chrome://settings/help` says **Chrome is up to date**, and `chrome://version` says 155 or later
 - [ ] `'modelContext' in document` prints `true`
 - [ ] `npm run doctor` passes
 - [ ] The drawer at localhost:5173 has a green **5 tools** badge
