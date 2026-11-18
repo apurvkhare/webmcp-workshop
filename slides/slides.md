@@ -26,7 +26,7 @@ npm run doctor
 npm start -- --app app
 ```
 
-- Open http://localhost:5173 in Chrome 155 or later
+- Open http://localhost:5173 in the latest Chrome, 155 or later
 - The drawer on the right says **5 tools**, not **WebMCP off**
 
 <!--
@@ -34,7 +34,7 @@ npm start -- --app app
 Say: "Two commands. Doctor checks your laptop. npm start with --app app serves the finished shop on port 5173. You'll switch to your own playground when we start coding."
 What to look for: the workshop drawer on the right of the shop shows a tool count in its header. The finished shop registers five tools while signed out, so it says "5 tools". If it says "WebMCP off", the flag isn't on.
 If it says "WebMCP off":
-1. chrome://version: needs 155 or later. Older? chrome://settings/help and relaunch.
+1. Ask everyone to update Chrome first: chrome://settings/help, then Relaunch. chrome://version must say 155 or later; the workshop was checked in 157.
 2. chrome://flags/#enable-webmcp-testing, set it to Enabled, and #devtools-webmcp-support too if it is listed. Relaunch Chrome.
 3. Flag not in the list at all, on 155 or later? Try chrome://flags/#enable-experimental-web-platform-features, which also turns WebMCP on. Or quit Chrome and start it from the terminal with --enable-features=WebMCP,DevToolsWebMCPSupport.
 4. Port 5173 taken? npm start -- --port 5174.
