@@ -25,6 +25,17 @@ Each line of the run is a step you wrote:
 
 If the run stops early, it says which tool it couldn't find. `npm run status` tells you which step that is.
 
+## Compare it with section 1
+
+In section 1 your agent did this task by reading and clicking the page. Now put the two side by side:
+
+1. **Look at the top of the Agent view tab.** It shows what an agent has to read on this page: the page as text, next to the list of tools. Both have a size. Go to another page and watch the first number change and the second stay put.
+2. **Press Shop by clicking.** A script does the task through the UI, the way your agent did. Each step is highlighted as it happens.
+3. **Press Shop with tools** again, and read the table. It has the steps and the amount of text read for each run.
+4. **Hold it against your agent's step list from section 1.** The replay is a script, not a model, so its numbers are not a benchmark. A real agent takes more steps both ways.
+
+Both runs end with the same order. WebMCP doesn't make something possible that wasn't. It changes how much the agent reads, how many steps it takes, how much can go wrong on the way, and who confirms the order.
+
 ## Try to break it
 
 - In the Tools tab, run `place_order` and press **Not now**. Read what the agent is told.

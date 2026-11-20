@@ -1,6 +1,6 @@
 # 1 An agent goes shopping
 
-No code in this section. You watch one task done twice: by an agent that drives the shop's UI, and by an agent that calls the shop's tools. Then you look at what each of them had to read.
+No code in this section. Before you write any WebMCP, see how an agent does a shopping task today: by reading the page and clicking it. You give your own agent the task, and you ask it to tell you every step it took.
 
 The task:
 
@@ -9,35 +9,53 @@ The task:
 ## Run it
 
 ```bash
-npm start -- --app app
+npm run go 2.1
 ```
 
-Open <http://localhost:5173>. This is the finished shop, with every tool from the workshop. The workshop drawer is on the right. If it is closed, the **Workshop** button at the right edge of the page opens it.
+```bash
+npm start
+```
 
-## Follow along
+If you did the setup check in the room, this is already running. Step 2.1's starting code registers no tools, so this is the shop as it is today, without WebMCP: the drawer says **0 tools**. Open <http://localhost:5173/?drawer=off>. `?drawer=off` hides the workshop drawer, so the agent sees only the shop. `?drawer=on` brings it back.
 
-1. **Do it by hand once.** Search, filter, open a product, pick the colour, add it, apply the coupon, sign in, check out. Count your clicks. Then press **Reset demo data** in the drawer.
-2. **Open the Agent view tab.** The top half shows what an agent has to read on this page: the page as text, the way a UI-driving agent receives it, next to the list of tools. Both have a size. Go to another page and watch the first number change and the second stay put.
-3. **Press Shop by clicking.** A script does the task through the UI, the way a UI-driving agent would: read the page, find the element, act, read the page again. Each step is highlighted as it happens.
-4. **Press Shop with tools.** A script does the same task by calling tools. When the dialog asks you to confirm the order, confirm it. An agent can't press that button.
-5. **Compare.** The table has the steps and the amount of text read for each run.
+## Give your agent the task
 
-📡 While the tools run, keep DevTools > **Application** > **WebMCP** open, or the drawer's **Activity** tab. Each call appears with its input and its result.
+Use any agent that can drive a browser: Antigravity's browser agent, Claude Code or Codex with Chrome DevTools MCP or Claude in Chrome, or another. The setup for each is in [demo/README.md](../../demo/README.md#with-a-coding-agent-instead). Give it this:
 
-On the projector, the presenter does the same with a real agent. The runbook is in [demo/README.md](../../demo/README.md).
+```text
+Open http://localhost:5173/?drawer=off in the browser and do this task on the page:
+
+Find wireless headphones under ₹5,000 rated 4 or higher, add the best-rated one that comes in black to the cart, apply the coupon DEVFEST10, and order it to my saved address in the earliest delivery slot.
+
+Use only the browser. Don't read this project's code and don't call the shop's API.
+
+When you're done, list every step you took, numbered: each time you read the page, and each click, key press or text you typed. Say where you had to look for something, guess or try again. Then give the totals.
+```
+
+The answer, to check it against: Tarang Studio Pro Wireless Headphones in black, ₹4,319 after the coupon, order **NB-1001**. Before you try again, reset the shop: open <http://localhost:5173/?drawer=on> and press **Reset demo data** in the drawer, or run `curl -X POST http://localhost:5173/api/dev/reset`.
+
+No agent with a browser? Do the task by hand and count your clicks, then watch the presenter's run. A recording of one, with its step list, is in [demo/recordings](../../demo/recordings/agent-without-webmcp.md).
+
+## Read what it tells you
+
+- **How many steps, and how many of them were reading?** Every action is followed by a read, because the agent can't know what changed.
+- **Where did it have to look?** The coupon box is collapsed. Checkout sends you to sign in first. The results show colour dots, not names.
+- **What did it read that wasn't for it?** One review on the black headphones is written to AI assistants.
+- **Who confirmed the order?** Nothing in the page knows an agent is there, so nothing stops it at Place order.
+
+On the projector, the presenter runs an agent the same way, then gives the same task to Gemini with the finished shop's tools. The runbook is in [demo/README.md](../../demo/README.md). You run the finished version yourself in section 7.
 
 ## 🧠 What to take from it
 
-- **Both runs end with the same order.** WebMCP doesn't make something possible that wasn't. It changes how much the agent has to read, how many steps it takes, and how much can go wrong on the way.
-- **The clicking run depends on the page.** Move a button, rename a label, add a banner, and it may break. The tool run depends on a contract: a name, a description and a schema.
-- **The tools run in the page, as the shopper.** Same session, same cookie, same server rules. No API key, no second backend.
-- **The shopper is still there.** The page follows the agent, and the order waits for a person to confirm it.
-- **The replay is a script, not a model.** It shows the shape of the two approaches. Its numbers are not a benchmark: a real agent takes more steps both ways, and how many depends on the model.
+- **An agent can already use your site.** It does it the way a person would, through the page, with no help from you.
+- **It pays for that in reading.** Each step is a screenshot or a page read, and most of what it reads isn't what it needs.
+- **It depends on the page.** Move a button, rename a label, add a banner, and it may break. With WebMCP the agent depends on a contract instead: a name, a description and a schema. That is what you write from section 2 on.
+- **The page can't tell it from a person.** So it can't ask the shopper before the order goes out, or log what the agent did.
 
 ## Explain it back
 
-1. In the clicking run, what did the agent have to read before it could add the product to the cart? In the tools run?
-2. Whose session did the tool calls use? Where did the code that placed the order run?
-3. Which step in the tools run could the script not do by itself, and why is that a good thing?
+1. How many steps did your agent take, and how many of them were reads?
+2. Where did it have to search, guess or go back?
+3. Which step should it not have done without asking you, and why couldn't the page stop it?
 
-**Next:** stop the server with Ctrl+C, then `npm run go 2.1` and `npm start`.
+**Next:** step 2.1 is already in your playground. Read `playground/README.md`. `npm start` keeps running.

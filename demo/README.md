@@ -1,6 +1,8 @@
 # Demo runbook: an agent goes shopping
 
-For the presenter, for section 1. One task, done twice on the projector: first by clicking through the UI, then by Gemini calling the shop's WebMCP tools from the Model Context Tool Inspector.
+For the presenter, for section 1. One task, done twice on the projector: first by an agent that reads and clicks the shop with no WebMCP, then by Gemini calling the shop's WebMCP tools from the Model Context Tool Inspector.
+
+Section 1 opens with the room, not the projector: each attendee gives the task to their own agent on the shop without tools, and asks it to list every step it took ([exercises/01](../exercises/01.agent-goes-shopping/README.md)). While they do, run 1 is on the projector. Run 2 comes after, when they have their own step lists to hold against it.
 
 The task, word for word:
 
@@ -12,13 +14,14 @@ The right answer is `hp-102`, Tarang Studio Pro, ₹4,799, rated 4.6. `hp-103` i
 
 | Piece | Where it runs |
 |---|---|
-| The shop (finished app) | `npm start -- --app app --port 5174`, on http://localhost:5174 |
+| The shop without tools, for run 1 | `npm start -- --app exercises/02.register-tools/01.problem.search-products --port 5175`, on http://localhost:5175 |
+| The finished shop, for run 2 | `npm start -- --app app --port 5174`, on http://localhost:5174 |
 | Chrome | A separate Chrome profile for the demo, with the WebMCP flag on |
-| Run 1 | The workshop drawer's **Shop by clicking** replay. A script, no model |
+| Run 1 | Claude Code, or any agent, driving the shop without tools. Or the [recording](recordings/agent-without-webmcp.md) |
 | Run 2 | The [Model Context Tool Inspector](https://chromewebstore.google.com/detail/model-context-tool-inspec/gbpdfapgefenggkahomfgkhfehlcenpd) extension in Chrome's side panel, with Gemini and your API key |
 | DevTools | Docked at the bottom, on **Application > WebMCP**, to show each call |
 
-Port 5174 keeps 5173 free for your own playground.
+Ports 5174 and 5175 keep 5173 free for your own playground. Step 2.1's starting code registers no tools, so on 5175 the shop is as it is today, without WebMCP. Each server keeps its own cart and orders.
 
 Attendees can use any agent they like with their own code: the Inspector, or a coding agent such as Claude Code, Codex or Antigravity through Chrome DevTools MCP. See [With a coding agent instead](#with-a-coding-agent-instead).
 
@@ -35,7 +38,11 @@ Do this on the presenter laptop at least a day before.
 
 ## Before the session: start the shop and Chrome
 
-In the repo, in its own terminal tab:
+In the repo, each in its own terminal tab:
+
+```bash
+npm start -- --app exercises/02.register-tools/01.problem.search-products --port 5175
+```
 
 ```bash
 npm start -- --app app --port 5174
@@ -43,24 +50,27 @@ npm start -- --app app --port 5174
 
 In the demo profile:
 
-1. Open http://localhost:5174.
+1. Open http://localhost:5174 in one tab and http://localhost:5175/?drawer=off in another.
 2. Open DevTools (Cmd+Option+I), **Application** tab, **WebMCP** in the sidebar. Dock DevTools at the bottom so the shop stays readable.
 3. Make the page zoom large enough for the back row (Cmd+Plus).
 
-## Run 1: by clicking
+## Run 1: an agent, without WebMCP
 
-1. Open the workshop drawer (the Workshop button at the right edge, or `?drawer=on`), tab **Agent view**.
-2. Press **Shop by clicking**. It resets the demo data and signs in as Asha by itself, then does the task the way a UI-driving agent would: read the page, act on one element, read the page again.
+The same thing the room is doing on their laptops. Two ways to show it:
 
-Say it before it starts: **this is a script, not a model, and not a benchmark.** The script already knows the shortest path and never misclicks, so it is the UI's best case.
+- **Live:** Claude Code (or any agent) with Chrome DevTools MCP and the `without.json` config from [With a coding agent instead](#with-a-coding-agent-instead), on http://localhost:5175/?drawer=off. Give it the prompt from [exercises/01](../exercises/01.agent-goes-shopping/README.md#give-your-agent-the-task), the one that ends by asking for a numbered list of every step.
+- **Recorded:** [recordings/agent-without-webmcp.gif](recordings/agent-without-webmcp.gif), Claude Code with Claude in Chrome, and its step list in [recordings/agent-without-webmcp.md](recordings/agent-without-webmcp.md): 36 tool calls, 21 actions and 15 reads. Use it if the live run is slow, and as the backup either way.
 
 What the room should notice, and what to say:
 
-- **Read, act, read.** Each step reads the page, the way Chrome DevTools MCP's `take_snapshot` does: the whole page as text, one line per element. Then one click or one field filled. Then another read, because the page changed. The drawer counts the steps and the characters read.
-- **The cards don't show colours.** To find "black", the script opens products one by one, best rated first: `hp-103` comes in blue and red only, so it goes back.
+- **Read, act, read.** Each action is followed by a screenshot or a page read, because the page changed and the agent can't know how.
+- **The cards don't show colour names.** To find "black", it opens products one by one, best rated first: `hp-103` comes in blue and red only, so it goes back.
 - **The coupon field is hidden** behind "Have a coupon?". It has to find the disclosure first.
-- **Checkout is three screens**: the address form ("Save and continue"), the delivery slots ("Continue"), the review ("Place order").
-- **Nobody asks you before the order is placed.** The script presses "Place order" itself. To the page, an agent's click is your click.
+- **Checkout sends it to sign in**, then three screens: the address form ("Save and continue"), the delivery slots ("Continue"), the review ("Place order").
+- **A review on `hp-102` is written to AI assistants.** The agent reads it whether or not it obeys it.
+- **Nobody asks you before the order is placed.** The agent presses "Place order" itself. To the page, an agent's click is your click.
+
+Then ask the room for their numbers: how many steps did your agent take, and where did it get stuck?
 
 ## Reset between runs
 
@@ -70,7 +80,7 @@ In a spare terminal:
 curl -X POST http://localhost:5174/api/dev/reset
 ```
 
-This clears the cart, the orders and the session. Then in Chrome: close the drawer, reload, **Sign in**, **Continue as Asha Rao (demo shopper)**, back to the home page. The Inspector reads the page's tools, not the page, so the drawer only takes up room.
+Use port 5175 to reset run 1's shop. This clears the cart, the orders and the session. Then in Chrome: close the drawer, reload, **Sign in**, **Continue as Asha Rao (demo shopper)**, back to the home page. The Inspector reads the page's tools, not the page, so the drawer only takes up room.
 
 ## Run 2: Gemini with the shop's tools
 
@@ -98,31 +108,30 @@ If Gemini calls `get_reviews` on `hp-102`, one review is a planted prompt inject
 
 ## The last minute: every laptop
 
-Tell the room: the workshop drawer's **Agent view** tab has the two buttons you just saw, **Shop by clicking** and **Shop with tools**. **Shop with tools** is the run 2 task done by a script instead of a model. Both count steps and how much text the agent had to read.
-
-Attendees have the finished shop running from the setup check (`npm start -- --app app`), so both buttons work on their laptops now. In **Shop with tools** they confirm the order themselves when the dialog asks. They press the same button again in section 7, on their own code. Anyone with a Gemini key can install the Inspector and type the task too.
+Tell the room: hold on to your agent's step list. In section 7, with every tool written, the workshop drawer's **Agent view** tab runs the task both ways, **Shop by clicking** and **Shop with tools**, and counts the steps and the text read for each. Anyone with a Gemini key can install the Inspector now and give it the task on the finished shop (`npm start -- --app app --port 5174`).
 
 ## Fallbacks
 
 In this order:
 
-1. **The drawer's Shop with tools** in place of run 2, if the network, the key or the model fails. It needs no network, no model and no key. You still click the button in the confirmation dialog.
-2. **The recording** from the dry run, both runs, with the Inspector panel and the WebMCP pane visible. Keep it on the desktop, not in a cloud folder.
-3. If Chrome itself won't start with WebMCP: the slides, and straight on to the concept section.
+1. **The recording** in place of run 1, if the live agent is slow or wanders.
+2. **The drawer's Shop with tools** in place of run 2, if the network, the key or the model fails. It needs no network, no model and no key. You still click the button in the confirmation dialog.
+3. **Your recording** of run 2 from the dry run, with the Inspector panel and the WebMCP pane visible. Keep it on the desktop, not in a cloud folder.
+4. If Chrome itself won't start with WebMCP: the slides, and straight on to the concept section.
 
 A dead network stops Gemini, not the shop: everything else runs on localhost.
 
 ## Dry run the night before
 
 - [ ] `npm run doctor` passes on the presenter laptop.
-- [ ] Shop on 5174, the demo profile open on it, DevTools on **Application > WebMCP**.
+- [ ] Shop without tools on 5175, the finished shop on 5174, the demo profile open on both, DevTools on **Application > WebMCP**.
+- [ ] Run 1 live, with the exercise 01 prompt, ends at NB-1001 and lists its steps. The recording plays from the desktop.
 - [ ] The WebMCP pane lists five tools signed out, eight signed in.
-- [ ] **Shop by clicking** runs to the end.
 - [ ] The Inspector lists eight tools signed in, and its key works.
 - [ ] Run 2 makes its five or six calls and stops at the confirmation dialog.
 - [ ] The dialog says **Place order · ₹4,319**, and the order is NB-1001 after a reset.
 - [ ] The WebMCP pane shows the calls with their inputs.
-- [ ] Both runs recorded (Cmd+Shift+5 on macOS), with the panel and the page in frame.
+- [ ] Run 2 recorded (Cmd+Shift+5 on macOS), with the panel and the page in frame.
 - [ ] **Shop with tools** works, and waits for your click.
 - [ ] The reset command is in your shell history or a note.
 - [ ] Notifications off, page zoom large, phone hotspot ready.
@@ -130,7 +139,7 @@ A dead network stops Gemini, not the shop: everything else runs on localhost.
 
 ## With a coding agent instead
 
-Any MCP client can call the shop's tools through [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and its `--categoryExperimentalWebmcp` flag: Claude Code, Codex, Antigravity, or another. This is also how to do run 1 with a real model: the same agent without the flag drives the UI with snapshots and clicks.
+Any MCP client can call the shop's tools through [Chrome DevTools MCP](https://github.com/ChromeDevTools/chrome-devtools-mcp) and its `--categoryExperimentalWebmcp` flag: Claude Code, Codex, Antigravity, or another. Without the flag, the same agent drives the UI with snapshots and clicks: that is run 1, and what attendees do in section 1.
 
 Chrome needs remote debugging on a profile that isn't your default one:
 
@@ -140,7 +149,7 @@ Chrome needs remote debugging on a profile that isn't your default one:
   --remote-debugging-port=9222 \
   --enable-features=WebMCP,DevToolsWebMCPSupport \
   --no-first-run \
-  "http://localhost:5174/?drawer=off"
+  "http://localhost:5175/?drawer=off"
 ```
 
 `--enable-features=WebMCP,DevToolsWebMCPSupport` does what the two `chrome://flags` entries do. The Chrome for Testing in the repo (`.chrome/chrome/mac_arm-157.0.8103.78/…`) works the same way; use its binary path instead. Download the server once, so the room's Wi-Fi isn't needed for it: `npx -y chrome-devtools-mcp@1.13.0 --version` should print `1.13.0`.
