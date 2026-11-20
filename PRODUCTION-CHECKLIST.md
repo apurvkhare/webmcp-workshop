@@ -4,12 +4,13 @@ Before you put WebMCP tools on a real site. Each line is one thing to check and 
 
 ## Tool design
 
-- [ ] **Names are short and say what the tool does**, like `search_products` or `place_order`. Chrome accepts 1 to 128 letters, digits, `_`, `-` and `.`, and rejects anything else with "Invalid tool name".
+- [ ] **Names are short and say what the tool actually does**, like `search_products` or `place_order`. A tool that only opens checkout is `start_checkout`, not `place_order`. Chrome accepts 1 to 128 letters, digits, `_`, `-` and `.`, and rejects anything else with "Invalid tool name".
 - [ ] **Each description says what the tool does, when to use it and what it returns.** It is the agent's only guide: it can't see your page.
 - [ ] **Descriptions point to the next tool**, like "Pass an id to add_to_cart". The agent learns the order of calls from them.
 - [ ] **Results are small:** only the fields the agent needs for its next step (`search_products` returns six fields of at most 8 products). Every result goes into the agent's context.
 - [ ] **You stay within Chrome's recommended budgets:** 30 characters per tool or parameter name, 150 per parameter description, 500 per tool description, 1,500 per tool result. They aren't enforced; they're what Chrome's docs recommend.
 - [ ] **Results are strings.** Chrome turns a returned object into JSON text and `undefined` into the text "undefined". The agent only ever gets text.
+- [ ] **Enum values are words a person would use,** like `black` or `silver`, not internal ids. The agent copies them from what the user said.
 - [ ] **The page registers only the tools it needs.** There is no limit on the number of tools, but each one takes space in the agent's context.
 
 ## Input and errors
@@ -19,17 +20,20 @@ Before you put WebMCP tools on a real site. Each line is one thing to check and 
 - [ ] **Errors are returned as text, not thrown.** If `execute` throws, the agent gets a generic "the invocation failed" and never sees your message.
 - [ ] **Each error says how to fix the call,** like "Tarang Studio Pro Wireless Headphones comes in black, silver. Pass one of those as colour." The agent can then correct itself.
 - [ ] **Errors you return start the same way** (`Error:` here), so your logs can count them.
+- [ ] **Rate limits and outages are errors as text too,** with what to do next, like "Error: too many searches. Wait a minute and try again."
+- [ ] **The page shows the change before `execute` returns success.** The person sees what the agent did, and the agent's next step finds the page in the state it was told about (`search_products` calls `shop.ui.showSearch()` first).
 
 ## Auth and session
 
 - [ ] **The server authorises every request,** whether a person or an agent made it. Tools run in the page, as the signed-in user, with the session they already have.
 - [ ] **Nothing is trusted more because an agent sent it.** A tool call is one more client of your API, and its input is untrusted input.
 - [ ] **Anything that spends money or can't be undone is worked out again on the server** from the current state, not from what the agent remembers (`place_order` previews the order from the cart as it is now).
+- [ ] **A consequential call acts on exact values,** the ones the person confirmed: `place_order` places the order for the slot in its preview (`preview.slot.id`), not whatever the agent passes next.
 - [ ] **Hiding a tool is not access control.** Unregistering `place_order` on sign-out is for the agent's benefit; the server still refuses a signed-out order.
 
 ## User control
 
-- [ ] **Annotations are set honestly:** `readOnlyHint` only on tools that change nothing, `untrustedContentHint` on results with other people's text, `consequentialHint` on anything that matters and is hard to undo.
+- [ ] **Annotations are set honestly:** `readOnlyHint` only on tools that change nothing, `untrustedContentHint` on results with other people's text, `consequentialHint` on anything that matters and is hard to undo, `debugging` on tools meant only for developer tooling.
 - [ ] **You don't rely on annotations to protect anyone.** They are hints to the agent. Chrome shows no confirmation of its own for `consequentialHint` today, and a malicious page can set any hints it likes.
 - [ ] **Consequential tools ask the person in your own UI,** for example a dialog inside `execute` that waits for a click. `requestUserInteraction()` is no longer in the spec or in Chrome.
 - [ ] **The confirmation shows what will actually happen** (items, address, slot, total from the server), not what the agent asked for.
@@ -47,6 +51,7 @@ Before you put WebMCP tools on a real site. Each line is one thing to check and 
 
 - [ ] **You feature-detect:** `if (!('modelContext' in document)) return;`. Without the flag or a trial token, there is no `modelContext`.
 - [ ] **Every tool that depends on state is registered with a `signal`,** and you abort it when the state changes. There is no `unregisterTool()`.
+- [ ] **A set of tools registers together or not at all.** If one `registerTool()` rejects, abort the signal so the rest go too. Half a set leaves the agent stuck halfway through a task.
 - [ ] **Tools are registered once.** A second tool with the same name rejects with "Duplicate tool name", so abort the old controller before you register again.
 - [ ] **The tool list matches what the page can do right now** (order tools only while signed in). `toolchange` tells agents when it changes.
 - [ ] **You `await` or catch `registerTool()`.** It returns a promise that rejects on a bad name, a duplicate or an empty description.
@@ -61,7 +66,7 @@ Before you put WebMCP tools on a real site. Each line is one thing to check and 
 
 - [ ] **Production pages carry an origin trial token** (a `<meta http-equiv="origin-trial">` tag or an `Origin-Trial` header). The flag only works on your own browser.
 - [ ] **You know when the trial ends:** it was extended to Chrome 162. There is no ship milestone yet. Put the end date from the trial console in your calendar.
-- [ ] **It is Chrome only today.** Edge has an implementation in testing; WebKit opposes WebMCP and Mozilla is neutral.
+- [ ] **You know who can call your tools.** Chrome runs an origin trial, and Edge runs its own from Edge 150. Outside the browser, ChatGPT Desktop supports WebMCP, Brave's Leo AI does from Brave 1.102.2 (expected January 2027), and Meta Ray-Ban Display has it coming. WebKit opposes WebMCP and Mozilla is neutral.
 - [ ] **The site works the same without WebMCP.** Every tool does something a person can also do in the UI.
 - [ ] **You know the declarative API (`toolname` on forms) is not in the spec** since October 2026. Chrome still supports it; it may change.
 - [ ] **You re-read the spec and Chrome's docs before each release.** This year the API moved from `navigator` to `document`, `executeTool()` switched from JSON strings to objects in Chrome 155, and `requestUserInteraction()` was removed.
@@ -74,11 +79,11 @@ Before you put WebMCP tools on a real site. Each line is one thing to check and 
 - [ ] **Each tool has been run by hand** from DevTools › Application › WebMCP.
 - [ ] **At least one agent has done a real task end to end,** for example through Chrome DevTools MCP with `--categoryExperimentalWebmcp`, or the Model Context Tool Inspector extension.
 
-> **Status on 15 Nov 2026: what could change**
+> **Status on 20 Nov 2026: what could change**
 >
 > - The origin trial runs to Chrome 162. Chrome has no ship milestone yet.
 > - Chrome may start checking input against `inputSchema` (its own source says it "will likely be" enforced). Keep your checks anyway.
-> - A way for a tool to ask the user (once `requestUserInteraction()`) is listed as future work.
+> - A way for a tool to ask the user (once `requestUserInteraction()`) is listed as future work. Proposals to bring it back, one as `requestUserInput()`, are open (spec issues #165 and #204).
 > - The declarative API is Chrome only; it may come back to the spec in another form, or go.
 > - Chrome passes a returned string to the agent as it is; the spec appears to JSON-serialise every result. Return strings and check this again.
 > - Whether Gemini in Chrome calls WebMCP tools, and whether it asks the user for `consequentialHint`, isn't documented yet.

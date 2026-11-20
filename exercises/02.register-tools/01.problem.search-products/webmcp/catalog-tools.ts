@@ -21,5 +21,5 @@ export async function registerCatalogTools(shop: Shop) {
   // 🧠 Return a string. Chrome turns anything else into JSON text, so decide yourself what the agent reads.
   // 📡 DevTools > Application > WebMCP lists search_products. Run it with query "wireless headphones" and maxPrice 5000.
   // 🧪 The tool exists, its schema has the four properties, and a search answers with matching products as JSON text.
-  // 🔥 2.1 Add title: 'Search products' (a short name for browser UI), and an outputSchema describing the array you return.
+  // 🔥 2.1 Add title: 'Search products' (a short name for browser UI), and an outputSchema describing the array you return (Chrome's docs list outputSchema from Chrome 159; an older Chrome may ignore it).
 }

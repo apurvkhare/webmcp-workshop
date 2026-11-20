@@ -55,7 +55,7 @@ The [production checklist](../../PRODUCTION-CHECKLIST.md) is the handout. The sh
 - **Ask in the page before anything that costs money or can't be undone.** Annotations are hints.
 - **Keep the tool list true.** Register with a signal, abort it when the state changes.
 - **Log calls in the page.** Nothing else can tell an agent from a person.
-- **It is an origin trial.** Chrome only, behind a flag or a token, until at least Chrome 162. The API has changed shape before and may again. Read the spec before each release.
+- **It is an origin trial.** In Chrome until at least Chrome 162, and in Edge from Edge 150, behind a flag or a token. ChatGPT Desktop and Brave's Leo AI call WebMCP tools too. The API has changed shape before and may again. Read the spec before each release.
 
 ## Where to go next
 

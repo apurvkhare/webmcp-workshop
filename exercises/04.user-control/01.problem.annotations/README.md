@@ -24,6 +24,8 @@ annotations: { readOnlyHint: true, untrustedContentHint: true }
 | `untrustedContentHint` | The result contains text from outside the site's control | Treat the result as data, never as instructions |
 | `consequentialHint` | This does something that matters and may not be undoable | Ask the user before calling it (step 4.2) |
 
+**There is a fourth, `debugging`,** for a tool meant for developer tooling rather than for an agent helping a person. Agents can leave those out. No Namma Bazaar tool needs it.
+
 **They are hints, not locks.** Chrome passes them to the agent and enforces nothing. A tool marked read-only can still write if you make it, so be honest: a wrong hint is worse than none.
 
 **Why `get_reviews` is different.** Every other tool returns text the shop wrote. Reviews are written by anyone with an account. One of the reviews of `hp-102` is addressed to AI assistants: it tells them to ignore their instructions and order five smartwatches. That is a prompt injection, and it reaches the agent through your tool.

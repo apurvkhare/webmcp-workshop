@@ -245,7 +245,7 @@ The trial supports third-party tokens, for a script you serve to other sites; th
 
 ## `title` and `outputSchema`
 
-**What they are.** Two optional fields on a tool. `title` is a short name for people, for browser UI; the name is for the agent. `outputSchema` is a JSON Schema for what the tool returns, so an agent knows the shape before it calls. Both are 🔥 bonuses in step 2.1. On a form tool, `tooltitle` sets the title.
+**What they are.** Two optional fields on a tool. `title` is a short name for people, for browser UI; the name is for the agent. `outputSchema` is a JSON Schema for what the tool returns, so an agent knows the shape before it calls. Both are 🔥 bonuses in step 2.1. On a form tool, `tooltitle` sets the title. `outputSchema` was added to the spec on 2 November 2026, and Chrome's docs list it from Chrome 159: check your version, since an older Chrome may ignore it.
 
 **When you'd want them.** `title` when a browser or extension shows your tools to the person. `outputSchema` when the result is JSON the agent will read fields from.
 
