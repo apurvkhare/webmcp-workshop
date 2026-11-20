@@ -6,3 +6,7 @@ playground/
 .vitest/
 .chrome/
 *.local
+
+# Presenter notes, kept locally: the run of show and the deck outline
+AGENDA.md
+slides/slides.md

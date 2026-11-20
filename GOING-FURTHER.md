@@ -1,6 +1,6 @@
 # Going further
 
-What didn't fit in 90 minutes. Each section says what it is, when you'd want it, and the smallest thing that works.
+What didn't fit in the workshop. Each section says what it is, when you'd want it, and the smallest thing that works.
 
 Some of this was run while writing the workshop, some wasn't. Anything marked **Not verified here** comes from Chrome's docs, the spec or the tools' own READMEs, and nobody ran it for this repo. Check it before you rely on it.
 

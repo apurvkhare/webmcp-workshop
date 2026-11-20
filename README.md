@@ -18,8 +18,6 @@ It teaches the WebMCP API as Chrome ships it in November 2026: `document.modelCo
 | 6 · See what agents do | A wrapper that logs every tool call | 6.1 |
 | 7 · Replay and ship | The opening task on your own code, then the production checklist. No code | – |
 
-The 75-minute run of show is in [AGENDA.md](AGENDA.md).
-
 ## Setup
 
 Needs the latest Chrome (155 or later), Node 20.19 or later, and git. Full instructions, to do before the day: [SETUP.md](SETUP.md).
@@ -107,8 +105,8 @@ For workshop authors: `npm run cut` regenerates every exercise folder and `app/`
 | `shop/` | The shop itself: the React UI, the API server, the seed data, the workshop drawer, and test helpers. Not WebMCP code, shared by every step |
 | `shop/src/webmcp.d.ts` | TypeScript types for `document.modelContext`, written for this workshop from the spec |
 | `scripts/` | The commands above. `scripts/authoring/` holds the source every step is cut from |
-| `slides/` · `demo/` | The deck (in Google Slides, linked from `slides/README.md`) with its outline and speaker notes, and the runbook for the opening demo |
-| `PRODUCTION-CHECKLIST.md` · `GOING-FURTHER.md` | The handout, and what didn't fit in 90 minutes |
+| `slides/` · `demo/` | The deck (in Google Slides, linked from `slides/README.md`), and the runbook for the opening demo |
+| `PRODUCTION-CHECKLIST.md` · `GOING-FURTHER.md` | The handout, and what didn't fit in the workshop |
 
 ## What this was checked against
 

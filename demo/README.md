@@ -1,6 +1,6 @@
 # Demo runbook: an agent goes shopping
 
-For the presenter. Section 1, at 0:04, 10 minutes. One task, done twice by a real agent on the projector: first by driving the UI, then with the shop's WebMCP tools.
+For the presenter, for section 1. One task, done twice by a real agent on the projector: first by driving the UI, then with the shop's WebMCP tools.
 
 Both runs use the same Chrome window, the same shop page and the same prompt. The only difference is what the agent is given: an MCP client connected to Chrome DevTools MCP, first without and then with `--categoryExperimentalWebmcp`.
 
@@ -167,7 +167,7 @@ What the room should notice, and what to say:
 - **Checkout is three screens**: the address form ("Save and continue"), the delivery slots ("Continue"), the review ("Place order").
 - **Nobody asks you before the order is placed.** The agent presses "Place order" itself. To the page, the agent's click is your click. (Claude Code or Gemini CLI may ask before each tool call: that is the agent asking, not the shop.)
 
-Stop at 0:09 whether it has finished or not. If it hasn't: "It's still going. That's the point. Let's give it tools."
+Stop after about four minutes whether it has finished or not. If it hasn't: "It's still going. That's the point. Let's give it tools."
 
 ## Reset between runs
 
@@ -213,18 +213,6 @@ Tell the room: the workshop drawer has an **Agent view** tab with two buttons, *
 Say it every time: **the replay is a script, not a model, and not a benchmark.** It shows the shape of the two approaches. The click script already knows the shortest path and never misclicks, so it is the UI's best case.
 
 Attendees have the finished shop running from the setup check (`npm start -- --app app`), so both buttons work on their laptops now. In **Shop with tools** they confirm the order themselves when the dialog asks. They press the same button again in section 7, on their own code.
-
-## Timing plan (10 minutes)
-
-| Clock | Min | What |
-|---|---|---|
-| 0:04 | 1 | The task on the slide. "How many clicks would this take you?" |
-| 0:05 | 4 | Run 1, without WebMCP. Narrate the snapshot, act, snapshot loop. Hard stop at 0:09 |
-| 0:09 | 0.5 | Reset, sign in, start the second agent |
-| 0:09:30 | 3 | Run 2, with WebMCP. Pause on the dialog, click, show the WebMCP pane |
-| 0:12:30 | 1.5 | The Agent view tab on every laptop, and the "scripted, not a benchmark" caveat |
-
-If run 1 is slow, cut it at 0:09 and go on. If run 2 is slow (rate limits, network), switch to the recording.
 
 ## Fallbacks
 
