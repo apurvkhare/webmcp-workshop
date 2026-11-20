@@ -38,12 +38,13 @@ No agent with a browser? Do the task by hand and count your clicks, then watch t
 
 ## Read what it tells you
 
+- **How did it see the page?** Screenshots read by a vision model, the HTML DOM, or the accessibility tree (roles, names and states). Most agents mix them. The recording used screenshots 14 times and the accessibility tree once, and never read the HTML.
 - **How many steps, and how many of them were reading?** Every action is followed by a read, because the agent can't know what changed.
 - **Where did it have to look?** The coupon box is collapsed. Checkout sends you to sign in first. The results show colour dots, not names.
 - **What did it read that wasn't for it?** One review on the black headphones is written to AI assistants.
 - **Who confirmed the order?** Nothing in the page knows an agent is there, so nothing stops it at Place order.
 
-On the projector, the presenter runs an agent the same way, then gives the same task to Gemini with the finished shop's tools. The runbook is in [demo/README.md](../../demo/README.md). You run the finished version yourself in section 7.
+On the projector, the presenter runs an agent the same way, or plays the recording. Keep your agent's step list: in section 7 you run the same task again, with the tools you wrote.
 
 ## 🧠 What to take from it
 

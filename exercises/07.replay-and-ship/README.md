@@ -34,6 +34,8 @@ In section 1 your agent did this task by reading and clicking the page. Now put 
 3. **Press Shop with tools** again, and read the table. It has the steps and the amount of text read for each run.
 4. **Hold it against your agent's step list from section 1.** The replay is a script, not a model, so its numbers are not a benchmark. A real agent takes more steps both ways.
 
+On the projector, the presenter gives the same task to Gemini in the Model Context Tool Inspector, on the finished shop. Gemini gets the tool list, not the page, and makes five or six calls. The runbook is in [demo/README.md](../../demo/README.md#run-2-in-section-7-gemini-with-the-shops-tools). Anyone with a Gemini key can do the same: install the Inspector, run `npm start -- --app app --port 5174`, and give it the task.
+
 Both runs end with the same order. WebMCP doesn't make something possible that wasn't. It changes how much the agent reads, how many steps it takes, how much can go wrong on the way, and who confirms the order.
 
 ## Try to break it

@@ -230,12 +230,13 @@ No agent with a browser? Do the task by hand and count your clicks, then watch t
 
 ### Read what it tells you
 
+- **How did it see the page?** Screenshots read by a vision model, the HTML DOM, or the accessibility tree (roles, names and states). Most agents mix them. The recording used screenshots 14 times and the accessibility tree once, and never read the HTML.
 - **How many steps, and how many of them were reading?** Every action is followed by a read, because the agent can't know what changed.
 - **Where did it have to look?** The coupon box is collapsed. Checkout sends you to sign in first. The results show colour dots, not names.
 - **What did it read that wasn't for it?** One review on the black headphones is written to AI assistants.
 - **Who confirmed the order?** Nothing in the page knows an agent is there, so nothing stops it at Place order.
 
-On the projector, the presenter runs an agent the same way, then gives the same task to Gemini with the finished shop's tools. The runbook is in [demo/README.md](demo/README.md). You run the finished version yourself in section 7.
+On the projector, the presenter runs an agent the same way, or plays the recording. Keep your agent's step list: in section 7 you run the same task again, with the tools you wrote.
 
 ### 🧠 What to take from it
 
@@ -1042,6 +1043,8 @@ In section 1 your agent did this task by reading and clicking the page. Now put 
 2. **Press Shop by clicking.** A script does the task through the UI, the way your agent did. Each step is highlighted as it happens.
 3. **Press Shop with tools** again, and read the table. It has the steps and the amount of text read for each run.
 4. **Hold it against your agent's step list from section 1.** The replay is a script, not a model, so its numbers are not a benchmark. A real agent takes more steps both ways.
+
+On the projector, the presenter gives the same task to Gemini in the Model Context Tool Inspector, on the finished shop. Gemini gets the tool list, not the page, and makes five or six calls. The runbook is in [demo/README.md](demo/README.md#run-2-in-section-7-gemini-with-the-shops-tools). Anyone with a Gemini key can do the same: install the Inspector, run `npm start -- --app app --port 5174`, and give it the task.
 
 Both runs end with the same order. WebMCP doesn't make something possible that wasn't. It changes how much the agent reads, how many steps it takes, how much can go wrong on the way, and who confirms the order.
 

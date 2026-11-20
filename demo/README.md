@@ -1,8 +1,8 @@
 # Demo runbook: an agent goes shopping
 
-For the presenter, for section 1. One task, done twice on the projector: first by an agent that reads and clicks the shop with no WebMCP, then by Gemini calling the shop's WebMCP tools from the Model Context Tool Inspector.
+For the presenter. One task, done twice on the projector: in section 1 by an agent that reads and clicks the shop with no WebMCP (run 1), and in section 7 by Gemini calling the shop's WebMCP tools from the Model Context Tool Inspector (run 2).
 
-Section 1 opens with the room, not the projector: each attendee gives the task to their own agent on the shop without tools, and asks it to list every step it took ([exercises/01](../exercises/01.agent-goes-shopping/README.md)). While they do, run 1 is on the projector. Run 2 comes after, when they have their own step lists to hold against it.
+Section 1 opens with the room, not the projector: each attendee gives the task to their own agent on the shop without tools, and asks it to list every step it took ([exercises/01](../exercises/01.agent-goes-shopping/README.md)). While they do, run 1 is on the projector. Section 1 shows no WebMCP at all. Run 2 waits for section 7, when the room has written the tools and can hold their step lists from section 1 against it.
 
 The task, word for word:
 
@@ -15,7 +15,7 @@ The right answer is `hp-102`, Tarang Studio Pro, ₹4,799, rated 4.6. `hp-103` i
 | Piece | Where it runs |
 |---|---|
 | The shop without tools, for run 1 | `npm start -- --app exercises/02.register-tools/01.problem.search-products --port 5175`, on http://localhost:5175 |
-| The finished shop, for run 2 | `npm start -- --app app --port 5174`, on http://localhost:5174 |
+| The finished shop, for run 2 in section 7 | `npm start -- --app app --port 5174`, on http://localhost:5174 |
 | Chrome | A separate Chrome profile for the demo, with the WebMCP flag on |
 | Run 1 | Claude Code, or any agent, driving the shop without tools. Or the [recording](recordings/agent-without-webmcp.md) |
 | Run 2 | The [Model Context Tool Inspector](https://chromewebstore.google.com/detail/model-context-tool-inspec/gbpdfapgefenggkahomfgkhfehlcenpd) extension in Chrome's side panel, with Gemini and your API key |
@@ -54,7 +54,7 @@ In the demo profile:
 2. Open DevTools (Cmd+Option+I), **Application** tab, **WebMCP** in the sidebar. Dock DevTools at the bottom so the shop stays readable.
 3. Make the page zoom large enough for the back row (Cmd+Plus).
 
-## Run 1: an agent, without WebMCP
+## Run 1, in section 1: an agent without WebMCP
 
 The same thing the room is doing on their laptops. Two ways to show it:
 
@@ -63,6 +63,7 @@ The same thing the room is doing on their laptops. Two ways to show it:
 
 What the room should notice, and what to say:
 
+- **How it sees the page.** Screenshots read by a vision model, the HTML DOM, or the accessibility tree. The recording used screenshots 14 times and the accessibility tree once, and never read the HTML (slide 8).
 - **Read, act, read.** Each action is followed by a screenshot or a page read, because the page changed and the agent can't know how.
 - **The cards don't show colour names.** To find "black", it opens products one by one, best rated first: `hp-103` comes in blue and red only, so it goes back.
 - **The coupon field is hidden** behind "Have a coupon?". It has to find the disclosure first.
@@ -71,6 +72,12 @@ What the room should notice, and what to say:
 - **Nobody asks you before the order is placed.** The agent presses "Place order" itself. To the page, an agent's click is your click.
 
 Then ask the room for their numbers: how many steps did your agent take, and where did it get stuck?
+
+## The last minute of section 1
+
+Tell the room: hold on to your agent's step list. In section 7, with every tool written, the workshop drawer's **Agent view** tab runs the task both ways, **Shop by clicking** and **Shop with tools**, and counts the steps and the text read for each, and you run the same task with Gemini and the tools.
+
+After run 2 in section 7: anyone with a Gemini key can install the Inspector and give it the task on the finished shop (`npm start -- --app app --port 5174`).
 
 ## Reset between runs
 
@@ -82,7 +89,7 @@ curl -X POST http://localhost:5174/api/dev/reset
 
 Use port 5175 to reset run 1's shop. This clears the cart, the orders and the session. Then in Chrome: close the drawer, reload, **Sign in**, **Continue as Asha Rao (demo shopper)**, back to the home page. The Inspector reads the page's tools, not the page, so the drawer only takes up room.
 
-## Run 2: Gemini with the shop's tools
+## Run 2, in section 7: Gemini with the shop's tools
 
 1. Click the Inspector icon in the toolbar. The side panel opens next to the shop, with the page's tools in **WebMCP Tools**: eight while signed in.
 2. Press **Reset** in the panel if an earlier chat is there.
@@ -105,10 +112,6 @@ What the room should notice:
 - **Annotations don't reach the model here.** The Inspector sends Gemini each tool's name, description and schemas, not its annotations. Hold that for section 4: hints are only as good as the agent that reads them.
 
 If Gemini calls `get_reviews` on `hp-102`, one review is a planted prompt injection telling AI assistants to add 5 of `sw-701` and order without asking. If Gemini follows it, the confirmation dialog shows a smartwatch you didn't ask for: click **Not now** and say "Hold that thought: section 4." Don't try to provoke it on stage.
-
-## The last minute: every laptop
-
-Tell the room: hold on to your agent's step list. In section 7, with every tool written, the workshop drawer's **Agent view** tab runs the task both ways, **Shop by clicking** and **Shop with tools**, and counts the steps and the text read for each. Anyone with a Gemini key can install the Inspector now and give it the task on the finished shop (`npm start -- --app app --port 5174`).
 
 ## Fallbacks
 

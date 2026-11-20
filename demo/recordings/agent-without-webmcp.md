@@ -41,6 +41,14 @@ The task, as given:
 
 **36 tool calls: 21 actions and 15 reads.**
 
+## How it saw the page
+
+Without WebMCP an agent has three ways to see a page: screenshots read by a vision model, the HTML DOM as text, or the accessibility tree (roles, names and states). This run used two of them:
+
+- **Screenshots, 14 times.** Claude read each one with its own vision; there was no separate vision model. It clicked at pixel coordinates from the screenshots, and typed and pressed keys like a keyboard.
+- **The accessibility tree, once.** One `find` searched the tree for the filter controls, and two `form_input` calls set Max price and Customer rating by their accessibility refs.
+- **The HTML DOM, never.** It didn't read the page's markup.
+
 ## What to point at
 
 - **Most of the work is reading.** Every action is followed by a screenshot or a page read, because the agent can't know what changed.
