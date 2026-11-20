@@ -8,7 +8,7 @@ Some of this was run while writing the workshop, some wasn't. Anything marked **
 
 **What it is.** A Chrome extension, "WebMCP - Model Context Tool Inspector", by François Beaufort of Chrome DevRel (not an official Google product). It opens in the side panel, lists the page's tools with their annotations, lets you run one with JSON input, and lets you chat with Gemini, which can call the tools.
 
-**When you'd want it.** To see whether a model picks the right tool from your names and descriptions. The DevTools WebMCP pane runs tools, but it isn't an agent.
+**When you'd want it.** To see whether a model picks the right tool from your names and descriptions. The DevTools WebMCP pane runs tools, but it isn't an agent. It is also what run 2 of the section 1 demo uses ([demo/README.md](demo/README.md)).
 
 **How.**
 
@@ -28,13 +28,15 @@ To run a tool by hand, the input must be valid JSON, for example `{"query": "wir
 
 Know what you're sending: your prompt, the tool definitions and the tool results go to Google's Gemini API, from your browser. On the free tier, Google may use that data to improve its products. The key is kept in the extension's `localStorage`. Rate limits are per project, so don't share one key across a room.
 
-**Not verified here.** Nobody ran the extension against Namma Bazaar. The default model (`gemini-3.6-flash` according to its source) and its free-tier limits may have changed.
+It sends Gemini each tool's name, description and schemas, but not its annotations, so `readOnlyHint` and `untrustedContentHint` don't reach the model. Read from version 1.9.20's source.
+
+**Not verified here.** Nobody ran the extension's chat against Namma Bazaar while writing this. The default model (`gemini-3.6-flash` according to its source) and its free-tier limits may have changed.
 
 ## Test with an agent's tools: Chrome DevTools MCP
 
 **What it is.** Chrome DevTools MCP is an MCP server that lets an MCP client drive Chrome: snapshots, clicks, network, performance. With `--categoryExperimentalWebmcp` it adds two tools, `list_webmcp_tools` and `execute_webmcp_tool`, which call your page's WebMCP tools the way an agent would.
 
-**When you'd want it.** Two cases. In CI, to check that your tools are registered and answer correctly in real Chrome, through the same path an agent uses, with no model. And by hand, to point Claude Code or Gemini CLI at your page and give it a task, which is what the section 1 demo does ([demo/README.md](demo/README.md) has the configs).
+**When you'd want it.** Two cases. In CI, to check that your tools are registered and answer correctly in real Chrome, through the same path an agent uses, with no model. And by hand, to point a coding agent such as Claude Code, Codex or Antigravity at your page and give it a task ([demo/README.md](demo/README.md) has the configs).
 
 **How.** The script below starts the server over stdio, opens the shop, lists the tools and calls two of them. It speaks plain JSON-RPC, so it needs nothing installed but Node. Start the shop first:
 
@@ -188,6 +190,30 @@ await document.modelContext.executeTool(tools.find((t) => t.name === 'pay'), { a
 Without `allow="tools"`, `registerTool()` in the iframe rejects with `NotAllowedError`. Without `exposedTo`, a tool is visible to its own origin only; without `fromOrigins`, `getTools()` returns same-origin tools only. `Permissions-Policy: tools=()` on a response turns tools off for that document. Origins must be secure (https, or localhost).
 
 **Not verified here.** In Chrome 157 the probe saw that `registerTool` takes `exposedTo` and `getTools` takes `fromOrigins`. Nobody ran a cross-origin iframe.
+
+## Other browsers: the W3C WebMCP polyfill
+
+**What it is.** [`@w3c/webmcp-polyfill`](https://github.com/w3c-oss/webmcp-polyfill), a polyfill for `document.modelContext` from the W3C Open Source Program pilot, Apache-2.0, with no runtime dependencies. It follows the spec draft: `registerTool` with a signal, `getTools`, `executeTool`, cancellation, `toolchange`, `toolactivated` and `toolcancel`, and tools across frames with `exposedTo` and `fromOrigins`. It doesn't implement the declarative form attributes from section 3, and it never replaces a native `document.modelContext`.
+
+**When you'd want it.** To run the same tool code in Firefox, Safari, or a Chrome without the flag: for tests, and for an agent of your own that lives in the page and calls `getTools()` and `executeTool()` itself. It does not make an agent appear. The browser's own agent, or an extension, still has to support WebMCP to call your tools.
+
+**How.**
+
+```bash
+npm install @w3c/webmcp-polyfill
+```
+
+Import it before the shop calls `setupWebMCP`, for example at the top of the entry file:
+
+```ts
+import '@w3c/webmcp-polyfill/auto';
+```
+
+There is also a script-tag build, `dist/polyfill.js`, and `installWebMCP()` if you'd rather install it yourself.
+
+With it loaded, `'modelContext' in document` is true in every browser with a secure context, so the check in `setupWebMCP` no longer tells you whether any agent can see the tools. It only tells you the API is there. Its `executeTool()` returns the result serialized as JSON, and a failed call rejects with a `DOMException` such as `OperationError` instead of the tool's own error.
+
+**Not verified here.** Version 0.1.1 was published on 16 November 2026, and it is 0.x: breaking changes ship in minor releases. Nobody ran this workshop's tools on it.
 
 ## Ship it: the origin trial
 

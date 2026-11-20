@@ -1037,7 +1037,7 @@ The [production checklist](PRODUCTION-CHECKLIST.md) is the handout. The short ve
 
 ### Where to go next
 
-[GOING-FURTHER.md](GOING-FURTHER.md) has what didn't fit: a real model calling your tools from the Model Context Tool Inspector, automated agent tests with Chrome DevTools MCP, tools in cross-origin iframes, and deploying with an origin trial token.
+[GOING-FURTHER.md](GOING-FURTHER.md) has what didn't fit: a real model calling your tools from the Model Context Tool Inspector, automated agent tests with Chrome DevTools MCP, tools in cross-origin iframes, the W3C polyfill for other browsers, and deploying with an origin trial token.
 
 ### Explain it back
 
