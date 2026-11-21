@@ -208,7 +208,7 @@ const checks: Check[] = [
       const events = page.evaluate(
         () => new Promise<string>((done) => document.modelContext.addEventListener('toolactivated', (e) => done(e.toolName), { once: true }))
       );
-      await begin(page, 'set_delivery_address', { fullName: 'Asha Rao', phone: '9845011111', line1: '221, 12th Main, Koramangala', city: 'Bengaluru', pincode: '560034', addressType: 'work' });
+      await begin(page, 'set_delivery_address', { fullName: 'Apurv Khare', phone: '9845011111', line1: '221, 12th Main, Koramangala', city: 'Bengaluru', pincode: '560034', addressType: 'work' });
       await until(page, () => (document.querySelector('form.address-form [name="pincode"]') as HTMLInputElement).value === '560034', 'Chrome to fill the form');
       expect((await events) === 'set_delivery_address', 'toolactivated did not fire for the form tool');
       expect(await page.evaluate(() => document.querySelector('form.address-form')!.matches(':tool-form-active')), 'the form does not match :tool-form-active');

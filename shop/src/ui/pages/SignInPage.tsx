@@ -44,7 +44,7 @@ export function SignInPage({ shop, state }: { shop: ShopApp; state: ShopState })
           <>
             <p>This is a demo shop, so there are no passwords. Sign in as the demo shopper to check out and see orders.</p>
             <button type="button" className="btn btn-primary btn-lg btn-block" data-action="sign-in" disabled={busy} onClick={signIn}>
-              {busy ? 'Signing in…' : 'Continue as Asha Rao (demo shopper)'}
+              {busy ? 'Signing in…' : 'Continue as Apurv Khare (demo shopper)'}
             </button>
             {problem && (
               <p className="form-error" role="alert">

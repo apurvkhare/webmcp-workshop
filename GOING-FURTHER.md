@@ -22,7 +22,7 @@ npm start -- --app app
 ```
 
 5. Open the extension's side panel on http://localhost:5173, press **Set Gemini API key**, paste the key.
-6. Type the opening task: "Find wireless headphones under ₹5,000 rated 4 or higher, add the best-rated one that comes in black to the cart, apply the coupon DEVFEST10, and order it to my saved address in the earliest delivery slot." Sign in as Asha first.
+6. Type the opening task: "Find wireless headphones under ₹5,000 rated 4 or higher, add the best-rated one that comes in black to the cart, apply the coupon DEVFEST10, and order it to my saved address in the earliest delivery slot." Sign in first.
 
 To run a tool by hand, the input must be valid JSON, for example `{"query": "wireless headphones", "maxPrice": 5000}`.
 

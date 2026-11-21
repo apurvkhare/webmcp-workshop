@@ -103,10 +103,10 @@ export const FREE_DELIVERY_FROM = 999;
 export const DELIVERY_FEE = 49;
 export const MAX_PER_LINE = 5;
 
-export const DEMO_USER: User = { id: 'u-asha', name: 'Asha Rao', email: 'asha@example.com' };
+export const DEMO_USER: User = { id: 'u-apurv', name: 'Apurv Khare', email: 'apurv@example.com' };
 
 export const DEMO_ADDRESS: Address = {
-  fullName: 'Asha Rao',
+  fullName: 'Apurv Khare',
   phone: '9845000000',
   line1: '14, 3rd Cross, Indiranagar',
   city: 'Bengaluru',

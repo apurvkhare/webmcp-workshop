@@ -528,7 +528,7 @@ On the checkout page, open DevTools > Application > WebMCP, or the Tools tab. `s
 Run it:
 
 ```json
-{ "fullName": "Asha Rao", "phone": "9845011111", "line1": "221, 12th Main, Koramangala", "city": "Bengaluru", "pincode": "560034", "addressType": "work" }
+{ "fullName": "Apurv Khare", "phone": "9845011111", "line1": "221, 12th Main, Koramangala", "city": "Bengaluru", "pincode": "560034", "addressType": "work" }
 ```
 
 The fields fill in and the form is outlined: the shop's CSS styles `form:tool-form-active`. The Save button is focused and highlighted, and the call is still running. Press **Save and continue**, and the answer arrives: "Saved the delivery address: …".

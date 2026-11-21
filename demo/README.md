@@ -87,7 +87,7 @@ In a spare terminal:
 curl -X POST http://localhost:5174/api/dev/reset
 ```
 
-Use port 5175 to reset run 1's shop. This clears the cart, the orders and the session. Then in Chrome: close the drawer, reload, **Sign in**, **Continue as Asha Rao (demo shopper)**, back to the home page. The Inspector reads the page's tools, not the page, so the drawer only takes up room.
+Use port 5175 to reset run 1's shop. This clears the cart, the orders and the session. Then in Chrome: close the drawer, reload, **Sign in**, **Continue as Apurv Khare (demo shopper)**, back to the home page. The Inspector reads the page's tools, not the page, so the drawer only takes up room.
 
 ## Run 2, in section 7: Gemini with the shop's tools
 
@@ -229,7 +229,7 @@ Driven by a small Node script that spoke JSON-RPC to the server over stdio. No m
 - Both tools need a `pageId` (from `new_page` or `list_pages`). `execute_webmcp_tool` takes `toolName` and `input`, a JSON string.
 - With the flag on, `new_page`, `navigate_page` and `list_pages` also print the page's WebMCP tools.
 - Chrome for Testing 157.0.8103.78 launched by the server (`--executablePath`, `--chromeArg=--enable-features=WebMCP,DevToolsWebMCPSupport`, headless), and a Chrome for Testing started separately with `--remote-debugging-port` and reached with `--browserUrl`: both worked. Stable Chrome 157.0.8103.51, launched headless by the server with `--chromeArg=--enable-features=WebMCP` and `--no-javascript-evaluation`, also listed and ran the tools.
-- On the finished app: five tools signed out; after clicking **Continue as Asha Rao (demo shopper)** through the server's `click`, eight. Calling `get_delivery_slots` while signed out returned `Error: Tool get_delivery_slots not found`.
+- On the finished app: five tools signed out; after clicking **Continue as Apurv Khare (demo shopper)** through the server's `click`, eight. Calling `get_delivery_slots` while signed out returned `Error: Tool get_delivery_slots not found`.
 - The whole task through `execute_webmcp_tool`: `search_products` returned hp-103, hp-102, hp-101, hp-107; `add_to_cart` with `purple` returned the "comes in black, silver" error; with `black`, "total ₹4,799"; `apply_coupon` returned "₹480 off. The total is now ₹4,319"; `get_delivery_slots` returned four slots, earliest first; `place_order` waited until the dialog's **Place order · ₹4,319** button was clicked, then returned "Order NB-1001 is placed: ₹4,319, pay on delivery, arriving Tomorrow, 16 Nov, 9 am to 12 pm."
 - The DevTools WebMCP pane, checked by loading the DevTools frontend against the shop in a headless Chrome for Testing 157.0.8103.78: **Application > WebMCP** is there with only `--enable-features=WebMCP` (no `DevToolsWebMCPSupport`). It has a "Tool activity" log, an "Available tools" list, and for a selected tool its details with **Add parameter** and **Run tool**.
 - While `place_order` waited, a `take_snapshot` sent to the same server did not return either (both timed out after 40 seconds with nobody clicking). The server runs one tool call at a time.
