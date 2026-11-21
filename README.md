@@ -4,6 +4,8 @@ Workshop material for **Hands-on WebMCP: Expose Your Web App to AI Agents** (GDG
 
 Everything is here: seven steps across five hands-on sections, two no-code sections around them, the finished app, a workshop drawer in the page with the live tool list, and the setup for working with an AI coding agent. Nothing calls a model and there is no API key: you play the agent yourself, from DevTools or the drawer. Do it in the room, or on your own with [CODELAB.md](CODELAB.md).
 
+The slides are online at [webmcp-workshop-slides.apurvkhare.workers.dev](https://webmcp-workshop-slides.apurvkhare.workers.dev).
+
 It teaches the WebMCP API as Chrome ships it in November 2026: `document.modelContext.registerTool(tool, { signal })`, tool annotations, and the declarative form attributes. It needs **Chrome 155 or later with a flag turned on**. See [SETUP.md](SETUP.md).
 
 ## The sections
@@ -105,7 +107,7 @@ For workshop authors: `npm run cut` regenerates every exercise folder and `app/`
 | `shop/` | The shop itself: the React UI, the API server, the seed data, the workshop drawer, and test helpers. Not WebMCP code, shared by every step |
 | `shop/src/webmcp.d.ts` | TypeScript types for `document.modelContext`, written for this workshop from the spec |
 | `scripts/` | The commands above. `scripts/authoring/` holds the source every step is cut from |
-| `slides/` · `demo/` | The deck (in Google Slides, linked from `slides/README.md`), and the runbook for the opening demo |
+| `slides/` · `demo/` | The deck ([online](https://webmcp-workshop-slides.apurvkhare.workers.dev), with more in `slides/README.md`), and the runbook for the opening demo |
 | `PRODUCTION-CHECKLIST.md` · `GOING-FURTHER.md` | The handout, and what didn't fit in the workshop |
 
 ## What this was checked against
